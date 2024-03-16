@@ -26,6 +26,7 @@ class Équipe(models.Model):
     leadID = models.ForeignKey(Utilisateur, on_delete=models.CASCADE, related_name='lead_teams')
     adjointID = models.ForeignKey(Utilisateur, on_delete=models.CASCADE, related_name='adjoint_teams')
     nombreMembres = models.IntegerField()
+    
 
 class Inscription(models.Model):
     ROLE_CHOICES = (
