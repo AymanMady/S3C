@@ -3,7 +3,7 @@ import random
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from django.http import HttpResponse
-from .models import Défi
+from main.models import Défi
 from django.shortcuts import get_object_or_404,render,redirect
 
 
