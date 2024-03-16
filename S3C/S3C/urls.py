@@ -21,5 +21,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("", include("main.urls")),
     path('', include('tach3.urls')),  # Include app-specific URLs
+    path("", include("rendre.urls")),
 
 ]
