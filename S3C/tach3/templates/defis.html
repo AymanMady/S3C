@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Défis</title>
+</head>
+<body>
+    <h1>All Défis</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Titre</th>
+                <th>Description</th>
+                <th>Nom du fichier</th>
+                <th>Chemin du fichier</th>
+                <th>Date de début</th>
+                <th>Date de fin</th>
+                <th colspan="2">action</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            <a href="{% url 'create_defi'  %}"> ajouter</a>
+            {% for defi in objs %}
+            <tr>
+                <td>{{ defi.titre }}</td>
+                <td>{{ defi.description }}</td>
+                <td>{{ defi.nom_file }}</td>
+                <td>{{ defi.chemin_file }}</td>
+                <td>{{ defi.date_debut }}</td>
+                <td>{{ defi.date_fin }}</td>
+                <td><a href="{% url 'delete_defi' id=defi.id %}">Supprimer</a></td>
+                <td><a href="{% url 'update_defi' defi_id=defi.id %}">Modifier</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
