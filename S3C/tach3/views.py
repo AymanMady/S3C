@@ -23,6 +23,14 @@ def create_defi(request):
             date_debut=date_debut,
             date_fin=date_fin
         )
+        notification_checked = request.POST.get('notification')  # Check if the checkbox is checked
+        recipients = ["22086@supnum.mr", "22086@supnum.mr", "aliysidahmedwedad@gmail.com", "22018@supnum.mr"]
+
+        if notification_checked == 'on':  # If the checkbox is checked
+            # Send the notification email
+            verification_Email(defi)
+
+            return HttpResponse("Notification email sent.")
         return redirect(get_all_defis)
 
     return render(request,'create_defi.html',{'mess':""})
@@ -108,24 +116,23 @@ def send_email(subject, message, recipients):
 
 from datetime import datetime
 
-def verification_Email():
+def verification_Email(defi):
+
     now = datetime.now()
-    subject = "Test"
-    message = f"Test emails"
-    recipients = ["22086@supnum.mr", "22086@supnum.mr", "aliysidahmedwedad@gmail.com", "22018@supnum.mr"]
+    subject = "S3C"
+    message = f" defi : {defi.titre} \n descrition : {defi.description} \n de {defi.date_debut} a {defi.date_fin}"
+    recipients = ["22086@supnum.mr", "aliysidahmedwedad@gmail.com"]
+    # defis_to_verify = Défi.objects.filter(date_debut__lte=now)
     
-    # Assuming date_debut is the DateTimeField in your model
-    defis_to_verify = Défi.objects.filter(date_debut__lte=now)
-    
-    for defi in defis_to_verify:
-        send_email(subject, message, recipients)
+    # for defi in defis_to_verify:
+    send_email(subject, message, recipients)
     
     return HttpResponse("Verification emails sent.")  # Optional response
-verification_Email()
+# verification_Email()
 
-def verification_Email(request):
-    subject = "Test"
-    message = f"test emails"
-    recipients = ["22086@supnum.mr", "22086@supnum.mr", "aliysidahmedwedad@gmail.com","22018@supnum.mr"]
+# def verification_Email(request):
+#     subject = "Test"
+#     message = f"test emails"
+#     recipients = ["22086@supnum.mr", "22086@supnum.mr", "aliysidahmedwedad@gmail.com","22018@supnum.mr"]
     
-    return send_email(subject, message, recipients)
+#     return send_email(subject, message, recipients)
