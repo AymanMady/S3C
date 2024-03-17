@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Défi</title>
+</head>
+<body>
+    <h1>Update Défi</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="titre">Titre:</label><br>
+        <input type="text" id="titre" name="titre" value="{{ obj.titre }}"><br>
+        <label for="description">Description:</label><br>
+        <textarea id="description" name="description" rows="4">{{ obj.description }}</textarea><br>
+        <label for="nom_file">Nom du fichier:</label><br>
+        <input type="text" id="nom_file" name="nom_file" value="{{ obj.nom_file }}"><br>
+        <label for="chemin_file">Chemin du fichier:</label><br>
+        <input type="text" id="chemin_file" name="chemin_file" value="{{ obj.chemin_file }}"><br>
+        <label for="date_debut">Date de début:</label><br>
+        <input type="date" id="date_debut" name="date_debut" value="{{ obj.date_debut }}"><br>
+        <label for="date_fin">Date de fin:</label><br>
+        <input type="date" id="date_fin" name="date_fin" value="{{ obj.date_fin }}"><br><br>
+        <button type="submit">Update Défi</button>
+    </form>
+</body>
+</html>
