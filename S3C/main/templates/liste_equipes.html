@@ -26,8 +26,8 @@
                         {% for equipe in equipes %}
                         <tr>
                             <td>{{ equipe.nomEquipe }}</td>
-                            <td>{{ equipe.leadID.nom }}</td>
-                            <td>{{ equipe.adjointID.nom }}</td>
+                            <td>{{ equipe.leadID.email }}</td>
+                            <td>{{ equipe.adjointID.email }}</td>
                             <td><a href="{% url 'detail_equipe' equipe.id %}">Voir Détails</a></td> 
                        </tr>
                     {% endfor %}
