@@ -9,19 +9,19 @@
 </head>
 <body>
     <h2>Inscription</h2>
-    <form action="{% url 'login' %}" method="post">
+    <form action="{% url 'creation_user' %}" method="post">
         {% csrf_token %}
         <label for="nom">Nom:</label><br>
-        <input type="text" id="nom" name="nom"><br>
+        <input type="text" id="nom" name="nom" required><br>
         
         <label for="prenom">Prénom:</label><br>
-        <input type="text" id="prenom" name="prenom"><br>
+        <input type="text" id="prenom" name="prenom" required><br>
         
         <label for="email">Email:</label><br>
-        <input type="email" id="email" name="email"><br>
+        <input type="email" id="email" name="email" required><br>
         
         <label for="motdepasse">Mot de passe:</label><br>
-        <input type="password" id="motdepasse" name="motdepasse"><br>
+        <input type="password" id="motdepasse" name="motdepasse" required><br>
         
         <label for="role">Rôle:</label><br>
         <select id="role" name="role">
@@ -47,6 +47,8 @@
         </select><br>
         
         <input type="submit" value="S'inscrire">
+        Pas encore membre ? <a href="#">Inscrivez-vous maintenant</a></div>
+        Mot de pass oublier? <a href="#">Reinisialiser</a></div>
     </form>
 </body>
 </html>
