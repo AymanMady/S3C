@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Affectation du Jury</title>
+</head>
+<body>
+    <h1>Affectation du Jury</h1>
+    
+    {% if mess %}
+        <p>{{ mess }}</p>
+    {% endif %}
+    
+    <form action="{% url 'affectation' %}" method="post">
+        {% csrf_token %}
+        <label for="id_jery">Sélectionner un membre du jury :</label>
+        <select name="id_jery" id="id_jery">
+            {% for jery in jerys %}
+                <option value="{{ jery.id }}">{{ jery.nom }} {{ jery.prénom }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <label for="id_defi">Sélectionner un défi :</label>
+        <select name="id_defi" id="id_defi">
+            {% for defi in defis %}
+                <option value="{{ defi.id }}">{{ defi.titre }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <button type="submit">Affecter</button>
+    </form>
+</body>
+</html>

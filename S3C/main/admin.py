@@ -4,6 +4,7 @@ from .models import *
 # Register your models here.
 
 
+admin.site.register(Critère)
 admin.site.register(Jery)
 admin.site.register(Etudiant)
 admin.site.register(Utilisateur)

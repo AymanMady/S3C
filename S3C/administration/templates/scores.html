@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scores des équipes pour les défis</title>
+</head>
+<body>
+    <h1>Scores des équipes pour les défis</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Équipe</th>
+                {% for defi in scores.0 %}
+                <th>{{ defi }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for equipe, scores_defis in scores.items %}
+            <tr>
+                <td>{{ equipe }}</td>
+                {% for score in scores_defis.values %}
+                <td>{{ score }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
