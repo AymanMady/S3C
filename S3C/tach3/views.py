@@ -8,6 +8,7 @@ from main.models import Défi
 from django.shortcuts import get_object_or_404, render, redirect
 
 
+
 def create_defi(request):
     if request.method == 'POST':
         titre = request.POST.get('titre')
@@ -32,19 +33,15 @@ def create_defi(request):
 
             return HttpResponse("Notification email sent.")
         return redirect(get_all_defis)
-
     return render(request,'create_defi.html',{'mess':""})
 
-# Read operation (Retrieve all records)
 def get_all_defis(request):
     objs=Défi.objects.all()
     return render(request,'defis.html', {"objs":objs})
 
-# Read operation (Retrieve a single record by ID)
 def get_defi_by_id(defi_id):
     return get_object_or_404(Défi, pk=defi_id)
 
-# Update operation
 def update_defi(request,defi_id):
     defi = get_object_or_404(Défi, pk=defi_id)
     if request.method=="POST":
@@ -76,20 +73,23 @@ def delete_defi(request,id):
     defi.delete()
     return redirect(get_all_defis)
 
-def send_email(subject, message, recipients):
+def send_email(subject, message):
+    recipients=[]
+    usere=Utilisateur.objects.all()
+    for i in usere:
+        if i.role=="Étudiant":
+            recipients.append(i.email)
     source = "s3c.404@gmail.com"
-    password = 'wsaw jdjj yrsw pfqv'  # Make sure to use your actual email password
+    password = 'wsaw jdjj yrsw pfqv'  
     smtp_server = "smtp.gmail.com"
     smtp_port = 587
     
     try:
-        # Set up the SMTP server
         server = smtplib.SMTP(smtp_server, smtp_port)
         server.starttls()
         server.login(source, password)
         
         for recipient in recipients:
-            # Create a multipart message
             msg = MIMEMultipart()
             msg['From'] = source
             msg['To'] = recipient
@@ -123,10 +123,8 @@ def verification_Email(defi):
     message = f" defi : {defi.titre} \n descrition : {defi.desc} \n de {defi.date_debut} a {defi.date_fin}"
     recipients = ["22086@supnum.mr", "aliysidahmedwedad@gmail.com"]
     # defis_to_verify = Défi.objects.filter(date_debut__lte=now)
-    
     # for defi in defis_to_verify:
-    send_email(subject, message, recipients)
-    
+    send_email(subject, message)
     return HttpResponse("Verification emails sent.")  # Optional response
 # verification_Email()
 
