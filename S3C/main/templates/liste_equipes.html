@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des Équipes</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h2>Liste des Équipes</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Nom de l'Équipe</th>
+                <th>Leader</th>
+                <th>Adjoint</th>
+                <th>Détails</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for equipe in equipes %}
+                <tr>
+                    <td>{{ equipe.nomEquipe }}</td>
+                    <td>{{ equipe.leadID.nom }}</td>
+                    <td>{{ equipe.adjointID.nom }}</td>
+                    <td><a href="{% url 'detail_equipe' equipe.id %}">Voir Détails</a></td>                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

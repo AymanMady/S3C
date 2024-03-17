@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Détail de l'équipe</title>
+</head>
+<body>
+    <h1>{{ equipe.nomEquipe }}</h1>
+    <h2>Membres de l'équipe:</h2>
+    <ul>
+        {% for membre in membres %}
+            <li>{{ membre.email }} - Spécialité: </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

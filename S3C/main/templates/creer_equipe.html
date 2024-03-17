@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Création d'Équipe</title>
+</head>
+<body>
+    <form method="POST">
+        {% csrf_token %}
+        <label for="nom_equipe">Nom de l'équipe:</label>
+        <input type="text" id="nom_equipe" name="nom_equipe" required><br><br>
+
+        <label for="lead_id">Lead:</label>
+        <select id="lead_id" name="lead_id">
+            {% for utilisateur in utilisateurs %}
+            <option value="{{ utilisateur.id }}">{{ utilisateur.email }}</option>
+            {% endfor %}
+        </select><br><br>
+
+        <label for="adjoint_id">Adjoint:</label>
+        <select id="adjoint_id" name="adjoint_id">
+            {% for utilisateur in utilisateurs %}
+            <option value="{{ utilisateur.id }}">{{ utilisateur.email }} {{ utilisateur.spécialité }}</option>
+            {% endfor %}
+        </select><br><br>
+
+        <label>Membres:</label><br>
+        {% for utilisateur in utilisateurs %}
+        <input type="checkbox" id="membre_{{ utilisateur.id }}" name="membres_ids" value="{{ utilisateur.id }}">
+        <label for="membre_{{ utilisateur.id }}">{{ utilisateur.email }} {{ utilisateur.spécialité }}</label><br>
+        {% endfor %}
+
+        <button type="submit">Créer Équipe</button>
+    </form>
+    <script>
+      document.querySelector('form').onsubmit = function() {
+          var membres = document.querySelector('select[name="membresIDs"]');
+          var selectedMembres = Array.from(membres.options).filter(option => option.selected);
+          
+          if (selectedMembres.length < 6 || selectedMembres.length > 8) {
+              alert("Le nombre de membres doit être entre 6 et 8.");
+              return false; // Empêche la soumission du formulaire
+          }
+          
+          return true; // Permet la soumission du formulaire
+      };
+      </script>
+      <script>
+        document.querySelector('form').onsubmit = function() {
+            var membres = document.querySelector('select[name="membresIDs"]');
+            var selectedMembres = Array.from(membres.options).filter(option => option.selected);
+            
+            if (selectedMembres.length < 6 || selectedMembres.length > 8) {
+                alert("Le nombre de membres doit être entre 6 et 8.");
+                return false; // Empêche la soumission du formulaire
+            }
+            
+            return true; // Permet la soumission du formulaire
+        };
+        </script>
+              
+</body>
+</html>
