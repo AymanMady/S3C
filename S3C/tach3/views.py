@@ -4,7 +4,7 @@ import random
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from django.http import HttpResponse
-from main.models import Défi
+from main.models import Défi,Utilisateur
 from django.shortcuts import get_object_or_404, render, redirect
 
 
@@ -16,7 +16,8 @@ def create_defi(request):
         file = request.FILES.get('file')  # Utilisez request.FILES pour récupérer les fichiers téléchargés
         date_debut = request.POST.get('date_debut')
         date_fin = request.POST.get('date_fin')
-
+        if datetime.strptime(date_debut, '%Y-%m-%d') > datetime.strptime(date_fin, '%Y-%m-%d'):
+            return render(request,'create_defi.html',{'mess':"le date de debut doit etre avent date de fin"})
         defi = Défi.objects.create(
             titre=titre,
             desc=desc,
@@ -46,19 +47,17 @@ def update_defi(request,defi_id):
     defi = get_object_or_404(Défi, pk=defi_id)
     if request.method=="POST":
         titre=request.POST.get('titre')
-        nom_file=request.POST.get('nom_file')
+        file = request.FILES.get('file')  
         description=request.POST.get('description')
-        chemin_file=request.POST.get('chemin_file')
         date_debut=request.POST.get('date_debut')
         date_fin=request.POST.get('date_fin')
         if titre:
             defi.titre = titre
         if description:
             defi.description = description
-        if nom_file:
-            defi.nom_file = nom_file
-        if chemin_file:
-            defi.chemin_file = chemin_file
+        if file:
+            defi.file = file
+
         if date_debut:
             defi.date_debut = date_debut
         if date_fin:
@@ -107,13 +106,6 @@ def send_email(subject, message):
     except Exception as e:
         return HttpResponse(f"An error occurred: {e}", status=500)
 
-# def verification_Email(request):
-#     subject = "Test"
-#     message = f"test emails"
-#     recipients = ["22086@supnum.mr", "22086@supnum.mr", "aliysidahmedwedad@gmail.com","22018@supnum.mr"]
-    
-#     return send_email(subject, message, recipients)
-
 from datetime import datetime
 
 def verification_Email(defi):
@@ -128,12 +120,6 @@ def verification_Email(defi):
     return HttpResponse("Verification emails sent.")  # Optional response
 # verification_Email()
 
-# def verification_Email(request):
-#     subject = "Test"
-#     message = f"test emails"
-#     recipients = ["22086@supnum.mr", "22086@supnum.mr", "aliysidahmedwedad@gmail.com","22018@supnum.mr"]
-    
-#     return send_email(subject, message, recipients)
 
 
 

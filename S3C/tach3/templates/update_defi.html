@@ -1,27 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Update Défi</title>
-</head>
-<body>
-    <h1>Update Défi</h1>
-    <form method="post">
+{% extends 'navbar.html' %}
+
+{% block content %}
+<div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="py-3 mb-4"><span class="text-muted fw-light">Account Settings /</span> Account</h4>
+
+    <div class="row">
+      <div class="col-md-10">
+        <div class="card mb-4">
+          <h5 class="card-header">Modifier une defi </h5>
+          <!-- Compte -->
+    
+          <hr class="my-0" />
+          <div class="card-body">
+            <form id="formAccountSettings" method="post" action="{% url 'update_defi' defi_id=obj.id %}" enctype="multipart/form-data">
         {% csrf_token %}
         <label for="titre">Titre:</label><br>
-        <input type="text" id="titre" name="titre" value="{{ obj.titre }}"><br>
+        <input class="form-control" type="text" id="titre" name="titre" value="{{ obj.titre }}"><br>
         <label for="description">Description:</label><br>
-        <textarea id="description" name="description" rows="4">{{ obj.description }}</textarea><br>
-        <label for="nom_file">Nom du fichier:</label><br>
-        <input type="text" id="nom_file" name="nom_file" value="{{ obj.nom_file }}"><br>
-        <label for="chemin_file">Chemin du fichier:</label><br>
-        <input type="text" id="chemin_file" name="chemin_file" value="{{ obj.chemin_file }}"><br>
+        <textarea class="form-control" id="description" name="description" rows="4">{{ obj.desc }}</textarea><br>
+
+
+        
+        <label for="nom_file"> fichier:</label><br>
+        <input  class="form-control"  value="{{obj.file}}" type="file" name="file" id="file" required /><br>
+
+        
         <label for="date_debut">Date de début:</label><br>
-        <input type="date" id="date_debut" name="date_debut" value="{{ obj.date_debut }}"><br>
+        <input class="form-control" type="date" id="date_debut" name="date_debut" value="{{ obj.date_debut }}"><br>
         <label for="date_fin">Date de fin:</label><br>
-        <input type="date" id="date_fin" name="date_fin" value="{{ obj.date_fin }}"><br><br>
-        <button type="submit">Update Défi</button>
+        <input class="form-control" type="date" id="date_fin" name="date_fin" value="{{ obj.date_fin }}"><br><br>
+        <button type="submit" class="btn btn-primary me-2">Update Défi</button>         
+          <button type="reset" href="get_all_defis" class="btn btn-outline-secondary">Annuler</button>
+
     </form>
-</body>
-</html>
+    {% endblock content %}
