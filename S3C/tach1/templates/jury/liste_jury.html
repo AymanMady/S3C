@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des Jurys</title>
+</head>
+<body>
+    <h1>Liste des Jurys</h1>
+    <ul>
+    {% for jury in jurys %}
+    <tr>
+        <td>{{ jury.nom }}</td>
+        <td> {{ jury.prénom }}</td>
+        <td>{{ jury.email }}</td>
+        <a href="{% url 'supprimer_jury' jury.id %}">Supprimer</a> 
+        <a href="{% url 'modifier_jury' jury.id %}">Modifier</a>
+    </tr>
+    {% endfor %}
+    </ul>
+</body>
+</html>
