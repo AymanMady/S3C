@@ -1,28 +1,11 @@
-<!-- 
-    <h1>Create Défi</h1>
-    <form >
-        <label for="titre">Titre:</label><br>
-        <input type="text" id="titre" name="titre" required><br>
-        <label for="description">Description:</label><br>
-        <textarea id="desc" name="desc" rows="4" required></textarea><br>
-        <label for="nom_file">file</label><br>
-        <input type="file" id="file" name="file" required><br>
-        <label for="date_debut">Date de début:</label><br>
-        <input type="date" id="date_debut" name="date_debut" required><br>
-        <label for="date_fin">Date de fin:</label><br>
-        <input type="date" id="date_fin" name="date_fin" required><br><br>
-        <input type="checkbox" id="notification" name="notification" > envoi le notification<br><br>
-        <button type="submit">Create Défi</button>
-    </form> -->
 
-
-{% extends 'navbar.html' %}
+{% extends 'navbar_jery.html' %}
 
 {% block content %}
             <!-- Content -->
 
             <div class="container-xxl flex-grow-1 container-p-y">
-                <h4 class="py-3 mb-4"><span class="text-muted fw-light">Account Settings /</span> Account</h4>
+                <h4 class="py-3 mb-4"><span class="text-muted fw-light">cree du Défi</h4>
   
                 <div class="row">
                   <div class="col-md-10">
@@ -68,11 +51,7 @@
                           </div>
                           <div class="mt-2">
                             <button type="submit" class="btn btn-primary me-2">Enregistrer</button>
-<<<<<<< HEAD
-                            <a type="reset" href="/get_all_defis" class="btn btn-outline-secondary">Annuler</a>
-=======
                             <button type="reset" class="btn btn-outline-secondary">Annuler</button>
->>>>>>> 1be76f8d91c9b2bd35c59513d2143969400f162d
                           </div>
                         </form>
                       </div>
