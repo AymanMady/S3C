@@ -3,7 +3,7 @@ import random
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from django.http import HttpResponse
-from .models import Défi
+from main.models import Défi
 from django.shortcuts import get_object_or_404,render,redirect
 
 
@@ -23,6 +23,13 @@ def create_defi(request):
             date_debut=date_debut,
             date_fin=date_fin
         )
+        notification_checked = request.POST.get('notification')  # Check if the checkbox is checked
+        recipients = ["22086@supnum.mr", "22086@supnum.mr", "aliysidahmedwedad@gmail.com", "22018@supnum.mr"]
+
+        if notification_checked == 'on':  # If the checkbox is checked
+            # Send the notification email
+            send_email(titre, description, recipients)
+            return HttpResponse("Notification email sent.")
         return redirect(get_all_defis)
 
     return render(request,'create_defi.html',{'mess':""})
@@ -121,7 +128,7 @@ def verification_Email():
         send_email(subject, message, recipients)
     
     return HttpResponse("Verification emails sent.")  # Optional response
-verification_Email()
+# verification_Email()
 
 def verification_Email(request):
     subject = "Test"
