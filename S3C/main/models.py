@@ -74,6 +74,7 @@ class Soumission(models.Model):
         ('évalué', 'Évalué'),
     )
     équipe = models.ForeignKey(Équipe, on_delete=models.CASCADE)
+    file = models.FileField(upload_to='uploads/', null=True, blank=True)
     défi = models.ForeignKey(Défi, on_delete=models.CASCADE)
     lienGit = models.CharField(max_length=255)
     dateSoumission = models.DateTimeField()

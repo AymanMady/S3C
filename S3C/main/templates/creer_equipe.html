@@ -3,16 +3,15 @@
 
 {% load static %}
 
-
 {% block title %}
 Créer une equipe 
 {% endblock %}
 
 {% block content %}
-
 <div class="content-wrapper">
   <!-- Contenu -->
-
+  
+             
   <div class="container-xxl flex-grow-1 container-p-y">
       <h4 class="py-3 mb-4"><span class="text-muted fw-light">Créer une equipe </span></h4>
 
@@ -25,82 +24,67 @@ Créer une equipe
 
                   <hr class="my-0" />
                   <div class="card-body">
-                      <form id="formAccountSettings" method="POST" >
-                        {% csrf_token %}
-
-                          <div class="row">
-                              <div class="mb-3 col-md-6">
-                                  <label for="firstName" class="form-label">Nom :</label>
-                                  <input class="form-control" type="text" id="firstName" name="nom_equipe"  autofocus />
-                              </div>
-                              <div class="mb-3 col-md-6">
-                                  <label for="lead_id" class="form-label">Lead:</label>
-                                  <select id="lead_id" name="lead_id" class="form-control">
-                                      {% for utilisateur in utilisateurs %}
-                                      <option value="{{ utilisateur.id }}">{{ utilisateur.email }}</option>
-                                      {% endfor %}
-                                  </select>
-                              </div>
-                              <div class="mb-3 col-md-6">
-                                  <label for="adjoint_id" class="form-label">Adjoint:</label>
-                                  <select id="adjoint_id" name="adjoint_id" class="form-control">
-                                      {% for utilisateur in utilisateurs %}
-                                      <option value="{{ utilisateur.id }}">{{ utilisateur.email }} {{ utilisateur.spécialité }}</option>
-                                      {% endfor %}
-                                  </select>
-                              </div>
-                              <div class="mb-3 col-md-6">
-                                <label class="form-label">Membres:</label><br>
-                                {% for utilisateur in utilisateurs %}
-                                <input class="form-control" type="checkbox" id="membre_{{ utilisateur.id }}" name="membres_ids" value="{{ utilisateur.id }}">
-                                <label class="form-label" for="membre_{{ utilisateur.id }}">{{ utilisateur.email }} {{ utilisateur.spécialité }}</label><br>
-                                {% endfor %}
-                              </div>
-                            </div>
-                          <div class="mt-2">
-                              <button type="submit" class="btn btn-primary me-2">Créer Équipe </button>
-                              <button type="reset" class="btn btn-outline-secondary">Annuler</button>
+                    {% if messages %}
+                      {% for message in messages %}
+                        {% if message.tags == 'error' %}
+                          <div class="alert alert-danger alert-dismissible" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                           </div>
-                      </form>
+                        {% elif message.tags == 'success' %}
+                          <div class="alert alert-success alert-dismissible" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                          </div>
+                        {% endif %}
+                      {% endfor %}
+                    {% endif %}
+                    <form id="formAccountSettings" method="POST" action="{% url 'creer_equipe' %}" >
+                      {% csrf_token %}
+                      <div class="row">
+                        <div class="mb-3 col-md-6">
+                            <label for="firstName" class="form-label">Nom :</label>
+                            <input class="form-control" type="text" id="firstName" name="nom_equipe"  autofocus  required/>
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label for="lead_id" class="form-label">Lead:</label>
+                            <select id="lead_id" name="lead_id" class="form-control" required>
+                                {% for utilisateur in utilisateurs %}
+                                <option value="{{ utilisateur.id }}">{{ utilisateur.email }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label for="adjoint_id" class="form-label">Adjoint:</label>
+                            <select id="adjoint_id" name="adjoint_id" class="form-control" required>
+                                {% for utilisateur in utilisateurs %}
+                                <option value="{{ utilisateur.id }}">{{ utilisateur.email }} {{ utilisateur.spécialité }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="mb-3 col-md-6">
+                          <label class="form-label">Membres:</label><br>
+                          {% for utilisateur in utilisateurs %}
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" id="membre_{{ utilisateur.id }}" name="membres_ids" value="{{ utilisateur.id }}" required>
+                              <label class="form-check-label" for="membre_{{ utilisateur.id }}">
+                                {{ utilisateur.email }} {{ utilisateur.spécialité }}
+                              </label>
+                            </div>
+                          {% endfor %}
+                        </div>
+                      </div>
+                      <div class="mt-2">
+                        <button type="submit" class="btn btn-primary me-2">Créer Équipe </button>
+                        <button type="reset" class="btn btn-outline-secondary">Annuler</button>
+                      </div>
+                    </form>
                   </div>
-                  <!-- / Compte -->
               </div>
-
           </div>
       </div>
   </div>
-  <!-- / Contenu -->
-
-
-
-  <div class="content-backdrop fade"></div>
 </div>
 
-<script>
-    document.querySelector('form').onsubmit = function() {
-        var membres = document.querySelector('select[name="membresIDs"]');
-        var selectedMembres = Array.from(membres.options).filter(option => option.selected);
-        
-        if (selectedMembres.length < 6 || selectedMembres.length > 8) {
-            alert("Le nombre de membres doit être entre 6 et 8.");
-            return false; // Empêche la soumission du formulaire
-        }
-        
-        return true; // Permet la soumission du formulaire
-    };
-    </script>
-    <script>
-      document.querySelector('form').onsubmit = function() {
-          var membres = document.querySelector('select[name="membresIDs"]');
-          var selectedMembres = Array.from(membres.options).filter(option => option.selected);
-          
-          if (selectedMembres.length < 6 || selectedMembres.length > 8) {
-              alert("Le nombre de membres doit être entre 6 et 8.");
-              return false; // Empêche la soumission du formulaire
-          }
-          
-          return true; // Permet la soumission du formulaire
-      };
-      </script>
-     
+<div class="content-backdrop fade"></div>
 {% endblock %}
