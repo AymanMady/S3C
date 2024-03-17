@@ -4,7 +4,7 @@ import random
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from django.http import HttpResponse
-from main.models import Défi
+from main.models import *
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib import messages
 
@@ -172,3 +172,8 @@ def download_or_view_file(request, file_id):
             response = HttpResponse(file_content.read())
             response['Content-Disposition'] = f'attachment; filename="{file.file.name}"'
             return response
+
+
+def noter(request):
+    objs=Soumission.objects.all()
+    return render(request,'noter.html', {"objs":objs})
