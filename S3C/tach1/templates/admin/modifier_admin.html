@@ -1,0 +1,24 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulaire d'inscription</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+<body>
+    <h2>Inscription</h2>
+    <form action="{% url 'modifier_admin' admin.id %}" method="post">
+        {% csrf_token %}
+        <label for="nom">Nom:</label><br>
+        <input type="text" id="nom" name="nom" value="{{admin.nom}}" required><br>
+        
+        <label for="prenom">Prénom:</label><br>
+        <input type="text" id="prenom" name="prenom" value="{{admin.prénom}}" required><br>
+        
+        
+        <input type="submit" value="Modifier">
+    </form>
+</body>
+</html>

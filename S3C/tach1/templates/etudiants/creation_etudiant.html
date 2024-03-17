@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulaire d'inscription</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+<body>
+    <h2>Inscription</h2>
+    <form action="{% url 'creation_etudiant' %}" method="post">
+        {% csrf_token %}
+        {% if messages %}
+            {% for message in messages %}
+                <h3 style="color: red;">{{ message }}</h3>
+            {% endfor %}
+        {% endif %}
+        <label for="nom">Nom:</label><br>
+        <input type="text" id="nom" name="nom" required><br>
+        
+        <label for="prenom">Prénom:</label><br>
+        <input type="text" id="prenom" name="prenom" required><br>
+        
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email" required><br>
+        
+        <label for="specialite">Spécialité:</label><br>
+        <select id="specialite" name="specialite">
+            <option value="DSI">DSI</option>
+            <option value="CNM">CNM</option>
+            <option value="RSS">RSS</option>
+        </select><br>
+        
+        <label for="niveau">Niveau:</label><br>
+        <select id="niveau" name="niveau">
+            <option value="L1">L1</option>
+            <option value="L2">L2</option>
+            <option value="L3">L3</option>
+            <option value="M1">M1</option>
+            <option value="M2">M2</option>
+        </select><br>
+        
+        <input type="submit" value="Ajouter">
+    </form>
+</body>
+</html>

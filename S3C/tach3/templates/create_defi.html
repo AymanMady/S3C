@@ -33,9 +33,7 @@
                       <hr class="my-0" />
                       <div class="card-body">
                         <form id="formAccountSettings" method="post" action="{% url 'create_defi' %}" enctype="multipart/form-data">
-                          {%if mess != ""%}  
-                          <p class="text-danger">{{mess}}</p>
-                          {%endif%}
+                            {{mess}}
                             {% csrf_token %}
                           <div class="row">
                             <div class="mb-3 col-md-9">
@@ -70,7 +68,11 @@
                           </div>
                           <div class="mt-2">
                             <button type="submit" class="btn btn-primary me-2">Enregistrer</button>
+<<<<<<< HEAD
                             <a type="reset" href="/get_all_defis" class="btn btn-outline-secondary">Annuler</a>
+=======
+                            <button type="reset" class="btn btn-outline-secondary">Annuler</button>
+>>>>>>> 1be76f8d91c9b2bd35c59513d2143969400f162d
                           </div>
                         </form>
                       </div>
@@ -81,4 +83,5 @@
                 
               </div>
               <!-- / Content -->
+
               {% endblock content %}

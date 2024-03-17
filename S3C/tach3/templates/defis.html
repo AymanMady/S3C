@@ -12,7 +12,11 @@
 
               <!-- Hoverable Table rows -->
               <div class="card">
+<<<<<<< HEAD
                 <h5 class="card-header"><a href="/create_defi">ajouter une defi</a></h5>
+=======
+                <h5 class="card-header">Hoverable rows</h5>
+>>>>>>> 1be76f8d91c9b2bd35c59513d2143969400f162d
                 <div class="table-responsive text-nowrap">
                   <table class="table table-hover">
                     <thead>
@@ -44,9 +48,9 @@
                             <a href="{% url 'update_defi' defi_id=defi.id %}">Modifier</a> | 
 
                             {% if file.file.name|slice:"-4:" == ".pdf" %}
-                            <a href="{% url 'download_or_view_file' file_id=defi.id %}">View PDF</a> 
+                            <a href="{% url 'download_or_view_file' file_id=defi.id %}">{{ defi.file }} </a> View PDF
                             {% else %}
-                                <a href="{% url 'download_or_view_file' file_id=defi.id %}">Download file</a>  
+                                <a href="{% url 'download_or_view_file' file_id=defi.id %}">{{ defi.file }}</a> Download
                             {% endif %}
                         </td>
                       </tr>
@@ -55,16 +59,8 @@
                   </table>
                 </div>
               </div>
+              <!--/ Hoverable Table rows -->
 
-              <script>
-                document.addEventListener("DOMContentLoaded", function() {
-    var element = document.getElementsByClassName("truncate");
-    var content = element.textContent;
-    if (content.length > 7) {
-        element.textContent = content.substring(0, 7);
-    }
-});
-              </script>
               </div>
               </div>
               </div>

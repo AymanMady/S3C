@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulaire d'inscription</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+<body>
+    <h2>Inscription</h2>
+    <form action="{% url 'modifier_etudiant' etudiant.id %}" method="post">
+        {% csrf_token %}
+        <label for="nom">Nom:</label><br>
+        <input type="text" id="nom" name="nom" value="{{etudiant.nom}}" required><br>
+        
+        <label for="prenom">Prénom:</label><br>
+        <input type="text" id="prenom" name="prenom" value="{{etudiant.prénom}}" required><br>
+        
+        <label for="specialite">Spécialité:</label><br>
+        <select id="specialite" name="specialite">
+            <option value="DSI" {% if etudiant.niveau == "DSI" %} selected {% endif %}>DSI</option>
+            <option value="CNM" {% if etudiant.niveau == "CNM" %} selected {% endif %}>CNM</option>
+            <option value="RSS" {% if etudiant.niveau == "RSS" %} selected {% endif %}>RSS</option>
+        </select><br>
+        
+        <label for="niveau">Niveau:</label><br>
+        <select id="niveau" name="niveau">
+            <option value="L1" {% if etudiant.spécialité == "L1" %} selected {% endif %}>L1</option>
+            <option value="L2" {% if etudiant.spécialité == "L2" %} selected {% endif %}>L2</option>
+            <option value="L3" {% if etudiant.spécialité == "L3" %} selected {% endif %}>L3</option>
+            <option value="M1" {% if etudiant.spécialité == "M1" %} selected {% endif %}>M1</option>
+            <option value="M2" {% if etudiant.spécialité == "M2" %} selected {% endif %}>M2</option>
+        </select><br>
+        
+        <input type="submit" value="Modifier">
+    </form>
+</body>
+</html>
