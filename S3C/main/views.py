@@ -10,6 +10,22 @@ from django.contrib import messages
 from django.contrib.auth.hashers import check_password
 from django.core.exceptions import ObjectDoesNotExist
 
+from django.core.mail import send_mail
+from random import randint
+from django.contrib import messages
+from django.conf import settings
+
+def generate_verification_code():
+    return str(randint(100000, 999999))
+
+
+
+def send_verification_email(to_email, verification_code):
+    subject = 'Verification Code'
+    message = f'Your verification code is: {verification_code}'
+    from_email = settings.EMAIL_HOST_USER
+    recipient_list = [to_email]
+    send_mail(subject, message, from_email, recipient_list)
 
 def creer_equipe(request):
     if request.method == 'POST':
@@ -109,4 +125,54 @@ def login(request):
             return render(request, 'login.html', {"mess": "Utilisateur n'existe pas !"})
 
     return render(request, 'login.html', {"mess": ""})
+
+def forgetPasword(request):
+
+    if request.method == "POST":
+        email = request.POST.get('email')
+        try:
+            user = Utilisateur.objects.filter(email=email).first()
+        except ObjectDoesNotExist:
+            return render(request, 'login.html', {"mess": "Utilisateur n'existe pas !"})
+        if user:
+            code = generate_verification_code()
+            send_verification_email(email, code)
+            request.session['verification_code_'] = code
+            request.session['mail_'] = email
+            return render(request,"verification_code.html")
+            return HttpResponse(code)
+    return render(request, 'forgot-password.html', {"mess": ""})
+
+def verification_code(request):
+    if request.method == "POST":
+        code = request.POST.get('code')
+        if code:
+            # Check if the code matches the one stored in the session
+            stored_code = request.session.get('verification_code_')
+            if stored_code == code:
+                return render(request, "change_password.html",{'mess':""})
+            else:
+                # Code is invalid, inform the user
+                return render(request, "verification_code.html",{'mess':"code incorrect"})
+        else:
+            # Code is not provided in the request
+            return render(request, "verification_code.html",{'mess':"code incorrect"})  # Or handle it as you wish
+    else:
+        # The view should only handle POST requests
+        return render(request,"verification_code.html",{'mess':""})  
+    
+def change_mot(request):
+    if request.method == "POST":
+        mot1 = request.POST.get('mot1')
+        mot2 = request.POST.get('mot2')
+        mail=request.session.get('mail_')
+        user = Utilisateur.objects.filter(email=mail).first()
+        if mot1 == mot2:
+            if user:
+                user.motDePasse=mot1
+                user.save()
+                return redirect(login)
+            
+        else:
+            return render(request, "change_password.html",{'mess':"les mots de passe ne sont pas identique  "})
 
