@@ -9,3 +9,9 @@ def etudiants(request):
 def jerys(request):
     all_jerys = Jery.objects.all()
     return render(request,"jerys.html",{"jerys":all_jerys})
+
+def add_etudiant(request):
+    return render(request,"add_etudiant.html")
+
+def add_jerys(request):
+    return render(request,"add_jerys.html")
