@@ -5,22 +5,12 @@ from django.contrib import messages
 from django.conf import settings
 from django.core.mail import send_mail
 from main.models import *
+from main.models import administrater as Admin
 # Create your views here.
 import openpyxl
 
 
 
-def generate_verification_code():
-    return str(randint(100000, 999999))
-
-
-
-def send_verification_email(to_email, verification_code):
-    subject = 'Verification Code'
-    message = f'Your verification code is: {verification_code}'
-    from_email = settings.EMAIL_HOST_USER
-    recipient_list = [to_email]
-    send_mail(subject, message, from_email, recipient_list)
 
 
 
@@ -37,18 +27,17 @@ def creation_etudiant(request):
         email = request.POST.get('email')
         specialite = request.POST.get('specialite')
         niveau = request.POST.get('niveau')
-        nom = request.session.get('nom')
-        prenom = request.session.get('prenom')
-        specialite = request.session.get('specialite')
-        niveau = request.session.get('niveau')
-        etudiant = Etudiant.objects.create(
-        nom=nom,
-        prénom=prenom,
-        email=email,
-        spécialité=specialite,
-        niveau=niveau
-        )
-
+        compte_existe = Etudiant.objects.filter(email=email)
+        if not compte_existe.exists(): 
+            etudiant = Etudiant.objects.create(
+            nom=nom,
+            prénom=prenom,
+            email=email,
+            spécialité=specialite,
+            niveau=niveau
+            )
+            return redirect('creation_etudiant')
+        messages.error(request, "Le compte déja existe")
         return redirect('creation_etudiant')
     return render(request, "etudiants/creation_etudiant.html")
 
@@ -89,29 +78,6 @@ def modifier_etudiant(request, id_etudiant):
 # _________________________________JURY______________________________________________________________
 
 
-def verification_jury(request):
-    email = request.session.get('email')
-    verification_code = request.session.get('verification_code')
-    if not email or not verification_code:
-        messages.error(request, 'Données de session de vérification invalides.')
-        return redirect('creation_jury')
-    if request.method == 'POST':
-        entered_code = request.POST.get('code')
-        if entered_code == verification_code:
-            nom = request.session.get('nom')
-            prenom = request.session.get('prenom')
-            jury = Jery.objects.create(
-            nom=nom,
-            prénom=prenom,
-            email=email
-            )
-            return redirect('creation_jury')
-        else:
-            messages.error(request, 'Code de vérification invalide.')
-    return render(request, 'jury/verification_jury.html', {'email': email, 'verification_code': verification_code})
-
-
-
 
 def creation_jury(request):
     if request.method == 'POST':
@@ -120,13 +86,12 @@ def creation_jury(request):
         email = request.POST.get('email')
         compte_existe = Jery.objects.filter(email=email)
         if not compte_existe.exists(): 
-            code = generate_verification_code()
-            send_verification_email(email, code)
-            request.session['verification_code'] = code
-            request.session['nom'] = nom
-            request.session['prenom'] = prenom
-            request.session['email'] = email
-            return redirect('verification_jury')
+            jery = Jery.objects.create(
+            nom=nom,
+            prénom=prenom,
+            email=email
+            )
+            return redirect('creation_jury')
         messages.error(request, "Le compte déja existe")
         return redirect('creation_jury')
     return render(request, "jury/creation_jury.html")
@@ -167,30 +132,6 @@ def modifier_jury(request, id_jury):
 # _____________________________________ADMIN__________________________________________________________
 
 
-def verification_admin(request):
-    email = request.session.get('email')
-    verification_code = request.session.get('verification_code')
-    if not email or not verification_code:
-        messages.error(request, 'Données de session de vérification invalides.')
-        return redirect('creation_admin')
-    if request.method == 'POST':
-        entered_code = request.POST.get('code')
-        if entered_code == verification_code:
-            nom = request.session.get('nom')
-            prenom = request.session.get('prenom')
-            admin = administrater.objects.create(
-            nom=nom,
-            prenom=prenom,
-            email=email
-            )
-            return redirect('creation_admin')
-        else:
-            messages.error(request, 'Code de vérification invalide.')
-    return render(request, 'admin/verification_admin.html', {'email': email, 'verification_code': verification_code})
-
-
-
-
 def creation_admin(request):
     if request.method == 'POST':
         nom = request.POST.get('nom')
@@ -198,13 +139,12 @@ def creation_admin(request):
         email = request.POST.get('email')
         compte_existe = administrater.objects.filter(email=email)
         if not compte_existe.exists(): 
-            code = generate_verification_code()
-            send_verification_email(email, code)
-            request.session['verification_code'] = code
-            request.session['nom'] = nom
-            request.session['prenom'] = prenom
-            request.session['email'] = email
-            return redirect('verification_admin')
+            admin = administrater.objects.create(
+            nom=nom,
+            prenom=prenom,
+            email=email
+            )
+            return redirect('creation_admin')
         messages.error(request, "Le compte déja existe")
         return redirect('creation_admin')
     return render(request, "admin/creation_admin.html")
