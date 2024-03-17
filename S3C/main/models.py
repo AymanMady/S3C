@@ -1,12 +1,12 @@
 from django.db import models
 
-class Admin(models.Model):
+class administrater(models.Model):
+    id = models.AutoField(primary_key=True)
     nom = models.CharField(max_length=255)
-    prénom = models.CharField(max_length=255)
+    prenom = models.CharField(max_length=255)
     email = models.EmailField(unique=True)
     
-    
-class Jury(models.Model):
+class Jery(models.Model):
     nom = models.CharField(max_length=255)
     prénom = models.CharField(max_length=255)
     email = models.EmailField(unique=True)
