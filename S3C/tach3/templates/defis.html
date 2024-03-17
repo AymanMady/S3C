@@ -2,6 +2,7 @@
 {% extends 'navbar.html' %}
 
 {% block content %}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <div class="content-wrapper">
     <!-- Content -->
@@ -9,11 +10,12 @@
     <div class="container-xxl flex-grow-1 container-p-y">
       <h4 class="py-3 mb-4"><span class="text-muted fw-light">Tables /</span> Basic Tables</h4>
 
-
+          
               <!-- Hoverable Table rows -->
               <div class="card">
                 <h5 class="card-header">Hoverable rows</h5>
                 <div class="table-responsive text-nowrap">
+                  <h5 class="card-header"> <a  href="{% url 'create_defi' %}">Ajouter</a></h5>
                   <table class="table table-hover">
                     <thead>
                       <tr>
@@ -40,13 +42,12 @@
                             {{ defi.desc }}
                         </td>
                         <td>
-                            <a href="{% url 'delete_defi' id=defi.id %}">Supprimer</a> | 
-                            <a href="{% url 'update_defi' defi_id=defi.id %}">Modifier</a> | 
+                            <a href="{% url 'delete_defi' id=defi.id %}" id="supprimer">Supprimer</a> | 
 
                             {% if file.file.name|slice:"-4:" == ".pdf" %}
-                            <a href="{% url 'download_or_view_file' file_id=defi.id %}">{{ defi.file }} </a> View PDF
+                            <a href="{% url 'download_or_view_file' file_id=defi.id %}">{{ defi.file }} </a> 
                             {% else %}
-                                <a href="{% url 'download_or_view_file' file_id=defi.id %}">{{ defi.file }}</a> Download
+                                <a href="{% url 'download_or_view_file' file_id=defi.id %}">{{ defi.file }}</a> 
                             {% endif %}
                         </td>
                       </tr>
@@ -61,4 +62,64 @@
               </div>
               </div>
 
+
+              
+<script>
+  {% if messages %}
+    {% for message in messages %}
+      {% if 'success' in message.tags %}
+        Swal.fire({
+          title: 'Ajout réussi',
+          text: '{{ message }}',
+          icon: 'success',
+          confirmButtonText: 'OK'
+        });
+      {% elif 'warning' in message.tags %}
+        Swal.fire({
+          title: 'Suppression réussie',
+          text: '{{ message }}',
+          icon: 'success',
+          confirmButtonText: 'OK'
+        });
+      {% elif 'info' in message.tags %}
+        Swal.fire({
+          title: 'Modification réussie',
+          text: '{{ message }}',
+          icon: 'success',
+          confirmButtonText: 'OK'
+        });
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+</script>
+              <script>
+                
+                var liensSupp = document.querySelectorAll("#supprimer");
+      
+                liensSupp.forEach(function (lien) {
+                  lien.addEventListener("click", function (event) {
+                    event.preventDefault();
+                
+                    // Stocker l'URL dans une variable
+                    var urlASupprimer = this.href;
+                
+                    Swal.fire({
+                      title: "Voulez-vous vraiment supprimer cet défi ?",
+                      text: "",
+                      icon: "question",
+                      showCancelButton: true,
+                      confirmButtonColor: "#3099d6",
+                      cancelButtonColor: "#d33",
+                      cancelButtonText: "Annuler",
+                      confirmButtonText: "Supprimer"
+                    }).then((result) => {
+                      // Redirection après le délai, si l'utilisateur confirme la suppression
+                      if (result.isConfirmed) {
+                        window.location.href = urlASupprimer;
+                      }
+                    });
+                  });
+                });
+       
+                    </script>
 {% endblock content %}

@@ -1,5 +1,19 @@
 from django.db import models
 
+class Admin(models.Model):
+    nom = models.CharField(max_length=255)
+    prénom = models.CharField(max_length=255)
+    email = models.EmailField(unique=True)
+    
+    
+class Jury(models.Model):
+    nom = models.CharField(max_length=255)
+    prénom = models.CharField(max_length=255)
+    email = models.EmailField(unique=True)
+
+
+
+
 class Etudiant(models.Model):
     
     NIVEAU_CHOICES = (
@@ -19,11 +33,6 @@ class Etudiant(models.Model):
     )
     spécialité = models.CharField(max_length=255, choices=SPECIALITE_CHOICES)
     niveau = models.CharField(max_length=3, choices=NIVEAU_CHOICES)
-
-class Jery(models.Model):
-    nom = models.CharField(max_length=255)
-    prénom = models.CharField(max_length=255)
-    email = models.EmailField(unique=True)
     
 class Utilisateur(models.Model):
     ROLES_CHOICES = (
