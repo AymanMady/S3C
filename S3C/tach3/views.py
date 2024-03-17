@@ -1,25 +1,25 @@
+from django.shortcuts import render, redirect, HttpResponse
 import smtplib
 import random
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from django.http import HttpResponse
 from main.models import Défi
-from django.shortcuts import get_object_or_404,render,redirect
+from django.shortcuts import get_object_or_404, render, redirect
 
 
 def create_defi(request):
-    if request.method=='POST':
-        titre=request.POST.get('titre')
-        nom_file=request.POST.get('nom_file')
-        description=request.POST.get('description')
-        chemin_file=request.POST.get('chemin_file')
-        date_debut=request.POST.get('date_debut')
-        date_fin=request.POST.get('date_fin')
+    if request.method == 'POST':
+        titre = request.POST.get('titre')
+        desc = request.POST.get('desc')
+        file = request.FILES.get('file')  # Utilisez request.FILES pour récupérer les fichiers téléchargés
+        date_debut = request.POST.get('date_debut')
+        date_fin = request.POST.get('date_fin')
+
         defi = Défi.objects.create(
             titre=titre,
-            description=description,
-            nom_file=nom_file,
-            chemin_file=chemin_file,
+            desc=desc,
+            file=file,
             date_debut=date_debut,
             date_fin=date_fin
         )
@@ -38,7 +38,7 @@ def create_defi(request):
 # Read operation (Retrieve all records)
 def get_all_defis(request):
     objs=Défi.objects.all()
-    return render(request,'defis.html',{"objs":objs})
+    return render(request,'defis.html', {"objs":objs})
 
 # Read operation (Retrieve a single record by ID)
 def get_defi_by_id(defi_id):
@@ -120,7 +120,7 @@ def verification_Email(defi):
 
     now = datetime.now()
     subject = "S3C"
-    message = f" defi : {defi.titre} \n descrition : {defi.description} \n de {defi.date_debut} a {defi.date_fin}"
+    message = f" defi : {defi.titre} \n descrition : {defi.desc} \n de {defi.date_debut} a {defi.date_fin}"
     recipients = ["22086@supnum.mr", "aliysidahmedwedad@gmail.com"]
     # defis_to_verify = Défi.objects.filter(date_debut__lte=now)
     
@@ -136,3 +136,34 @@ def verification_Email(defi):
 #     recipients = ["22086@supnum.mr", "22086@supnum.mr", "aliysidahmedwedad@gmail.com","22018@supnum.mr"]
     
 #     return send_email(subject, message, recipients)
+
+
+
+# def upload_file(request):
+#     if request.method == 'POST':
+#         form = FileUploadForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             new_file = form.save()
+#             return redirect('file_list')
+#     else:
+#         form = FileUploadForm()
+#     return render(request, 'upload_file.html', {'form': form})
+
+# def file_list(request):
+#     files = UploadedFile.objects.all()  
+#     return render(request, 'file_list.html', {'files': files})
+
+def download_or_view_file(request, file_id):
+    file = Défi.objects.get(pk=file_id)
+    if file.file.name.endswith('.pdf'):
+
+        with open(file.file.path, 'rb') as pdf_file:
+            response = HttpResponse(pdf_file.read(), content_type='application/pdf')
+            response['Content-Disposition'] = f'inline; filename="{file.file.name}"'
+            return response
+    else:
+        # Pour tous les autres types de fichiers, forcez le téléchargement
+        with open(file.file.path, 'rb') as file_content:
+            response = HttpResponse(file_content.read())
+            response['Content-Disposition'] = f'attachment; filename="{file.file.name}"'
+            return response
