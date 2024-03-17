@@ -9,6 +9,8 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib import messages
 
 
+def home_jery(request):
+    return render(request,"home_jery.html")
 
 
 def create_defi(request):

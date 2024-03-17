@@ -1,31 +1,60 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulaire d'inscription</title>
-    <link rel="stylesheet" href="{% static 'styles.css' %}">
-</head>
-<body>
-    <h2>Inscription</h2>
-    <form action="{% url 'creation_admin' %}" method="post">
-        {% csrf_token %}
-        {% if messages %}
-            {% for message in messages %}
-                <h3 style="color: red;">{{ message }}</h3>
-            {% endfor %}
-        {% endif %}
-        <label for="nom">Nom:</label><br>
-        <input type="text" id="nom" name="nom" required><br>
-        
-        <label for="prenom">Prénom:</label><br>
-        <input type="text" id="prenom" name="prenom" required><br>
-        
-        <label for="email">Email:</label><br>
-        <input type="email" id="email" name="email" required><br>
-        
-        <input type="submit" value="Ajouter">
-    </form>
-</body>
-</html>
+
+{% extends 'navbar_admin.html' %}
+
+{% block content %}
+            <!-- Content -->
+
+            <div class="container-xxl flex-grow-1 container-p-y">
+                <h4 class="py-3 mb-4"><span class="text-muted fw-light">Ajouter admin</h4>
+  
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="card mb-4">
+                      <h5 class="card-header">Ajouter admin</h5>
+                      <!-- Compte -->
+                
+                      <hr class="my-0" />
+                      <div class="card-body">
+                        <form action="{% url 'creation_admin' %}" method="post">
+                            {% csrf_token %}
+                            {% if messages %}
+                                {% for message in messages %}
+                                    <h3 style="color: red;">{{ message }}</h3>
+                                {% endfor %}
+                            {% endif %}
+                          <div class="row">
+                            <div class="mb-3 col-md-12">
+                              <label for="titre" class="form-label">Nom:</label>
+                              <input
+                                class="form-control"
+                                type="text"
+                                id="titre"
+                                name="nom"
+                                autofocus required/>
+                            </div>
+                            <div class="mb-3 col-md-12">
+                              <label for="date_debut" class="form-label">prenom:  </label>
+                              <input class="form-control" type="text" name="prenom" id="date_debut"  required/>
+                            </div>
+                            <div class="mb-3 col-md-12">
+                              <label for="date_fin" class="form-label">Email</label>
+                              <input class="form-control" type="email" name="email" id="date_fin"  required/>
+                            </div>
+                
+
+                          </div>
+                          <div class="mt-2">
+                            <button type="submit" class="btn btn-primary me-2">Enregistrer</button>
+                            <button type="reset" class="btn btn-outline-secondary">Annuler</button>
+                          </div>
+                        </form>
+                      </div>
+                      <!-- /Compte -->
+                    </div>
+                  </div>
+                </div>
+                
+              </div>
+              <!-- / Content -->
+
+              {% endblock content %}
