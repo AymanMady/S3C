@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'rendre',
     'tach1',
     'tach3',
+    'administration',
 ]
 
 MIDDLEWARE = [

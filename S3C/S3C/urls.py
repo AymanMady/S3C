@@ -23,5 +23,6 @@ urlpatterns = [
     path('', include('tach3.urls')),  # Include app-specific URLs
     path("", include("rendre.urls")),
     path('', include('tach1.urls')),
+    path('', include('administration.urls')),
 
 ]
