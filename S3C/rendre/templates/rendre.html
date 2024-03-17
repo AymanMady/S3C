@@ -1,0 +1,71 @@
+{% extends 'navbar.html' %}
+
+{% block title %}
+  rendre
+{% endblock %}
+
+{% block content %}
+<div class="content-wrapper">
+  <!-- Contenu -->
+
+  <div class="container-xxl flex-grow-1 container-p-y">
+      <h4 class="py-3 mb-4"><span class="text-muted fw-light">render le travail </span></h4>
+
+      <div class="row">
+          <div class="col-md-12">
+
+              <div class="card mb-4">
+                  <h5 class="card-header">render le travail </h5>
+
+                  <hr class="my-0" />
+                  <div class="card-body">
+                      <form id="formAccountSettings" method="POST" action="{% url 'render_travail' %}">
+                        {% csrf_token %}
+                          <div class="row">
+                              <div class="mb-3 col-md-12">
+                                  <label for="firstName" class="form-label">Equipe :</label>
+                                  <select id="équipe" name="équipe" class="form-control">
+                                    {% for equipe in equipes %}
+                                        <option value="{{ equipe.id }}">{{ equipe.nomEquipe }}</option>
+                                    {% endfor %}
+                                </select>
+                              </div>
+                              <div class="mb-3 col-md-12" >
+                                <label for="firstName" class="form-label">Defi :</label>
+                                <select id="défi" name="défi" class="form-control">
+                                  {% for défi in défis %}
+                                      <option value="{{ défi.id }}">{{ défi.titre }}</option>
+                                  {% endfor %}
+                              </select>                            
+                            </div>
+                            <div class="mb-3 col-md-12">
+                              <label for="firstName" class="form-label">Lien Git: :</label>
+                              <input class="form-control" type="text"  name="lienGit"  autofocus />
+                          </div>
+                              <div class="mb-3 col-md-12">
+                                  <label for="firstName" class="form-label">Date de Soumission:</label>
+                                  <input class="form-control" type="date" id="firstName" name="dateSoumission"  autofocus />
+                              </div>
+                          </div>
+
+                          <div class="mt-2">
+                              <button type="submit" class="btn btn-primary me-2">Enregistrer </button>
+                              <button type="reset" class="btn btn-outline-secondary">Annuler</button>
+                          </div>
+                      </form>
+                  </div>
+                  <!-- / Compte -->
+              </div>
+
+          </div>
+      </div>
+  </div>
+  <!-- / Contenu -->
+
+
+  <!-- / Pied de page -->
+
+  <div class="content-backdrop fade"></div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,64 @@
+
+{% extends 'navbar.html' %}
+
+{% block content %}
+
+<div class="content-wrapper">
+    <!-- Content -->
+
+    <div class="container-xxl flex-grow-1 container-p-y">
+      <h4 class="py-3 mb-4"><span class="text-muted fw-light">Tables /</span> Basic Tables</h4>
+
+
+              <!-- Hoverable Table rows -->
+              <div class="card">
+                <h5 class="card-header">Hoverable rows</h5>
+                <div class="table-responsive text-nowrap">
+                  <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th>Titre</th>
+                        <th>Date de début</th>
+                        <th>Date de fin</th>
+                        <th>Description</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody class="table-border-bottom-0">
+                        {% for defi in objs %}
+                      <tr>
+                        <td>
+                            {{ defi.titre }}
+                        </td>
+                        <td>
+                            {{ defi.date_debut }}
+                        </td>
+                        <td>
+                            {{ defi.date_fin }}
+                        </td>
+                        <td>
+                            {{ defi.desc }}
+                        </td>
+                        <td>
+                            <a href="{% url 'delete_defi' id=defi.id %}">Supprimer</a> | 
+                            <a href="{% url 'update_defi' defi_id=defi.id %}">Modifier</a> | 
+
+                            {% if file.file.name|slice:"-4:" == ".pdf" %}
+                            <a href="{% url 'download_or_view_file' file_id=defi.id %}">{{ defi.file }} </a> View PDF
+                            {% else %}
+                                <a href="{% url 'download_or_view_file' file_id=defi.id %}">{{ defi.file }}</a> Download
+                            {% endif %}
+                        </td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <!--/ Hoverable Table rows -->
+
+              </div>
+              </div>
+              </div>
+
+{% endblock content %}
