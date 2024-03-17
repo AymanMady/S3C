@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.conf import settings
 from django.core.mail import send_mail
 from main.models import *
+from main.models import administrater as Admin
 # Create your views here.
 import openpyxl
 
