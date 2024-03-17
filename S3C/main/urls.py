@@ -18,4 +18,6 @@ urlpatterns = [
     path('change_mot/', views.change_mot, name='change_mot'),
 
 
+
+
 ]
