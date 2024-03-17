@@ -1,0 +1,30 @@
+<!-- modifier_affectation.html -->
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Modifier l'affectation</title>
+</head>
+<body>
+    <h1>Modifier l'affectation</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="id_jery">Membre du jury:</label>
+        <select name="id_jery" id="id_jery">
+            {% for jery in jerys %}
+                <option value="{{ jery.id }}" {% if jery.id == affectation.membre_jury.id %} selected {% endif %}>{{ jery.nom }} {{ jery.prénom }}</option>
+            {% endfor %}
+        </select><br><br>
+
+        <label for="id_defi">Défi:</label>
+        <select name="id_defi" id="id_defi">
+            {% for defi in defis %}
+                <option value="{{ defi.id }}" {% if defi.id == affectation.defi.id %} selected {% endif %}>{{ defi.titre }}</option>
+            {% endfor %}
+        </select><br><br>
+
+        <button type="submit">Modifier</button>
+    </form>
+</body>
+</html>

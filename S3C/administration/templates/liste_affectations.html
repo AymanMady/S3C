@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des affectations</title>
+</head>
+<body>
+    <h1>Liste des affectations</h1>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Membre du jury</th>
+                <th>Défi</th>
+                <th colspan="2">acrion</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for affectation in affectations %}
+            <tr>
+                <td>{{ affectation.membre_jury.nom }} {{ affectation.membre_jury.prénom }}</td>
+                <td>{{ affectation.defi.titre }}</td>
+                <td><a href="{% url 'supprimer_affectation' id=affectation.id %}" id="supprimer">Supprimer</a></td>
+                <td><a href="{% url 'modifier_affectation' id=affectation.id %}" id="supprimer">modifier</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
+
