@@ -1,10 +1,11 @@
+{% load static %}
+
 <!DOCTYPE html>
-<html lang="en" class="light-style layout-menu-fixed layout-compact" dir="ltr" data-theme="theme-default" data-assets-path="{% static 'assets/' %}" data-template="vertical-menu-template-free">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <title>Dashboard</title>
+    <title>{% block title %}{% endblock %}</title>
 
     <meta name="description" content="" />
 
@@ -50,7 +51,7 @@
                                 <!-- SVG Content -->
                             </svg>
                         </span>
-                        <span class="app-brand-text demo menu-text fw-bold ms-2">Sneat</span>
+                        <span class="app-brand-text demo menu-text fw-bold ms-2">S3C</span>
                     </a>
 
                     <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
@@ -62,25 +63,25 @@
 
                 <ul class="menu-inner py-1">
                     <!-- Dashboards -->
-                    <li class="menu-item active open">
-                        <a href="javascript:void(0);" class="menu-link menu-toggle">
-                            <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                            <div data-i18n="Dashboards">Dashboards</div>
-                        </a>
-                    </li>
 
+                    <li class="menu-item">
+                      <a href="{% url 'home' %}" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                        <div data-i18n="Basic">home</div>
+                      </a>
+                  </li>
                     <!-- Components -->
                     <li class="menu-header small text-uppercase"><span class="menu-header-text">les operations</span></li>
                     <!-- Cards -->
                     <li class="menu-item">
-                        <a href="" class="menu-link">
+                        <a href="{% url 'cree_groupe' %}" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-collection"></i>
                             <div data-i18n="Basic">cree un groupe</div>
                         </a>
                     </li>
                     <!-- User interface -->
                     <li class="menu-item">
-                        <a href="" class="menu-link">
+                        <a href="{% url 'render_travail' %}" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-collection"></i>
                             <div data-i18n="Basic">rendre le travail</div>
                         </a>
@@ -172,6 +173,7 @@
                 <!-- / Navbar -->
 
                 <!-- Content wrapper -->
+                {% block content %}{% endblock %}
 
 
                 <!-- Content wrapper -->

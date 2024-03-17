@@ -2,7 +2,7 @@ from django.shortcuts import render,HttpResponse
 from main.models import *
 # Create your views here.
 
-def login(request):
+def creation_user(request):
     if request.method == 'POST':
         nom = request.POST.get('nom')
         prenom = request.POST.get('prenom')
@@ -21,4 +21,4 @@ def login(request):
             niveau=niveau
         )
         return HttpResponse("insere")
-    return render(request, "login.html")
+    return render(request, "creation_user.html")
