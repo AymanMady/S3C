@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Vérification Email en temps réel</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        $('#email_input').on('input', function() {
+            var email = $(this).val();
+            if (email.length > 3) { // Vérifie l'email seulement si la longueur est > 3
+                $.ajax({
+                    url: '/verifier_email/',  // Assurez-vous que cette URL est correcte.
+                    method: 'GET',
+                    data: { 'email': email },
+                    success: function(response) {
+                        if (response.message === 'Étudiant' || response.message === 'Jury') {
+                            $('#resultat_div').html(response.message + ' <button onclick="location.href=\'/next_page/\'">Suivant</button>');
+                        } else {
+                            $('#resultat_div').text(response.message);
+                        }
+                    }
+                });
+            } else {
+                $('#resultat_div').text(''); // Efface le message si l'email est trop court
+            }
+        });
+    });
+    </script>
+</head>
+<body>
+    <h2>Vérification de l'Email en Temps Réel</h2>
+    <form>
+        Email : <input type="email" id="email_input" name="email">
+    </form>
+    <div id="resultat_div"></div>
+</body>
+</html>

@@ -16,7 +16,9 @@ urlpatterns = [
     path('forgetPasword/', views.forgetPasword, name='forgetPasword'),
     path('change_mot/', views.change_mot, name='change_mot'),
 
+      path('verifier_email/', views.verifier_email, name='verifier_email'),
 
-
-
+      path('inscription-jury/', views.inscription_jury, name='inscription_jury'),
+      path('inscrire-etudiant/', views.inscription_etudiant, name='inscrire_etudiant'),
+      path('traiter-inscription/', views.traiter_inscription, name='traiter_inscription'),
 ]

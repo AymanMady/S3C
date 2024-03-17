@@ -14,6 +14,75 @@ from django.core.mail import send_mail
 from random import randint
 from django.contrib import messages
 from django.conf import settings
+from .forms import *
+
+from .forms import  InscriptionJuryForm
+from django.db.models import Q
+
+
+
+def inscription_jury(request):
+    if request.method == 'POST':
+        form = InscriptionJuryForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('login.html')  # Rediriger vers le tableau de bord après l'inscription
+    else:
+        form = InscriptionJuryForm()  # Utilisation de InscriptionJuryForm() pour instancier le formulaire
+    return render(request, 'inscription_jury.html', {'form': form})
+
+
+
+def inscription_etudiant(request):
+    if request.method == 'POST':
+        form = EtudiantForm(request.POST)
+        if form.is_valid():
+            # Si le formulaire est valide, enregistrez l'étudiant
+            form.save()
+            # Redirigez l'utilisateur vers une page de confirmation ou toute autre page souhaitée
+            return redirect('login')
+    else:
+        # Si la méthode de la requête n'est pas POST, initialisez simplement le formulaire
+        form = EtudiantForm()
+    return render(request, 'inscription_etudiant.html', {'form': form})
+
+
+def traiter_inscription(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        # Faites ce que vous avez besoin de faire avec l'email, comme vérifier s'il existe déjà dans votre base de données
+        # Par exemple, vous pouvez effectuer une vérification d'email en temps réel ici et renvoyer un message JSON approprié
+        if email:
+            # Traitez l'email ici (vérification, enregistrement en base de données, etc.)
+            # Par exemple, vous pouvez vérifier si l'email est déjà enregistré dans votre base de données
+            if email_existe_deja(email):
+                return JsonResponse({'message': 'L\'email existe déjà'})
+            else:
+                return JsonResponse({'message': 'L\'email est valide'})
+        else:
+            return JsonResponse({'message': 'L\'email est requis'})
+
+    return JsonResponse({'message': 'Méthode non autorisée'})
+
+
+# La fonction de vue ajustée
+def verifier_email(request):
+    if request.method == "GET" and 'email' in request.GET:
+        email = request.GET.get('email')
+        if Utilisateur.objects.filter(email=email).exists():
+            return JsonResponse({'message': 'Utilisateur existe'})
+        elif Etudiant.objects.filter(email=email).exists():
+            return JsonResponse({'message': 'Étudiant'})
+        elif Jery.objects.filter(email=email).exists():
+            return JsonResponse({'message': 'Jury'})
+        else:
+            return JsonResponse({'message': 'Non trouvé'})
+    else:
+        # Lors d'une requête GET sans paramètre email, afficher le formulaire
+        return render(request, 'verifier_email.html')
+
+
+
 
 def generate_verification_code():
     return str(randint(100000, 999999))
