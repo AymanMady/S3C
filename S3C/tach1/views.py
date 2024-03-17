@@ -61,18 +61,18 @@ def creation_etudiant(request):
         email = request.POST.get('email')
         specialite = request.POST.get('specialite')
         niveau = request.POST.get('niveau')
-        compte_existe = Etudiant.objects.filter(email=email)
-        if not compte_existe.exists(): 
-            code = generate_verification_code()
-            send_verification_email(email, code)
-            request.session['verification_code'] = code
-            request.session['nom'] = nom
-            request.session['prenom'] = prenom
-            request.session['email'] = email
-            request.session['specialite'] = specialite
-            request.session['niveau'] = niveau
-            return redirect('verification_etudiant')
-        messages.error(request, "Le compte déja existe")
+        nom = request.session.get('nom')
+        prenom = request.session.get('prenom')
+        specialite = request.session.get('specialite')
+        niveau = request.session.get('niveau')
+        etudiant = Etudiant.objects.create(
+        nom=nom,
+        prénom=prenom,
+        email=email,
+        spécialité=specialite,
+        niveau=niveau
+        )
+
         return redirect('creation_etudiant')
     return render(request, "etudiants/creation_etudiant.html")
 
