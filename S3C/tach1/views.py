@@ -27,30 +27,6 @@ def send_verification_email(to_email, verification_code):
 
 # _________________________________ETUDIANTS_____________________________________________________________________
 
-def verification_etudiant(request):
-    email = request.session.get('email')
-    verification_code = request.session.get('verification_code')
-    if not email or not verification_code:
-        messages.error(request, 'Données de session de vérification invalides.')
-        return redirect('creation_etudiant')
-    if request.method == 'POST':
-        entered_code = request.POST.get('code')
-        if entered_code == verification_code:
-            nom = request.session.get('nom')
-            prenom = request.session.get('prenom')
-            specialite = request.session.get('specialite')
-            niveau = request.session.get('niveau')
-            etudiant = Etudiant.objects.create(
-            nom=nom,
-            prénom=prenom,
-            email=email,
-            spécialité=specialite,
-            niveau=niveau
-            )
-            return redirect('creation_etudiant')
-        else:
-            messages.error(request, 'Code de vérification invalide.')
-    return render(request, 'etudiants/verification_etudiant.html', {'email': email, 'verification_code': verification_code})
 
 
 

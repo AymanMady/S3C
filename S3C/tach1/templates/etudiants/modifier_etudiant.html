@@ -16,7 +16,7 @@
                 
                       <hr class="my-0" />
                       <div class="card-body">
-                        <form action="{% url 'modifier_etudiant' etudiant.id %}" method="post">
+                        <form action="" method="post">
                             {% csrf_token %}
                             {% if messages %}
                                 {% for message in messages %}

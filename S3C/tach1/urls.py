@@ -5,7 +5,6 @@ urlpatterns = [
    # _________________________________ETUDIANTS_____________________________________________________________________
 
    path('creation_etudiant/',views.creation_etudiant,name='creation_etudiant'),
-   path('verification_etudiant/',views.verification_etudiant,name='verification_etudiant'),
    path('liste_etudiants/',views.liste_etudiants,name='liste_etudiants'),
    path('supprimer_etudiant/<int:id_etudiant>',views.supprimer_etudiant,name="supprimer_etudiant"),
    path('modifier_etudiant/<int:id_etudiant>',views.modifier_etudiant,name="modifier_etudiant"),
