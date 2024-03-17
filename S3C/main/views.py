@@ -60,3 +60,6 @@ def detail_equipe(request, equipe_id):
     inscriptions = Inscription.objects.filter(équipe=equipe)
     membres = [inscription.utilisateur for inscription in inscriptions]
     return render(request, 'detail_equipe.html', {'equipe': equipe, 'membres': membres})
+
+def acceuil_principale(request):
+    return render(request,"acceuil_principale.html") 
