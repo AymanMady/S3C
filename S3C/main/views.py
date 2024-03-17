@@ -6,7 +6,9 @@ from django.shortcuts import render
 from django.db.models import Q
 from django.contrib import messages
 
-
+from django.contrib.auth import logout
+from django.shortcuts import redirect
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.hashers import check_password
 from django.core.exceptions import ObjectDoesNotExist
 
@@ -87,6 +89,9 @@ def verifier_email(request):
 def generate_verification_code():
     return str(randint(100000, 999999))
 
+def logout_user(request):
+    logout(request)
+    return redirect('acceuil_principale')
 
 
 def send_verification_email(to_email, verification_code):
@@ -244,4 +249,6 @@ def change_mot(request):
             
         else:
             return render(request, "change_password.html",{'mess':"les mots de passe ne sont pas identique  "})
+
+
 

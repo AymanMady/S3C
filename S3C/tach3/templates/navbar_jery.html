@@ -86,7 +86,7 @@
                     </li>
                     <!-- User interface -->
                     <li class="menu-item">
-                        <a href="#" class="menu-link">
+                        <a href="{% url 'noter' %}" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-collection"></i>
                             <div data-i18n="Basic">Noter</div>
                         </a>
@@ -168,7 +168,7 @@
                                         <div class="dropdown-divider"></div>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="javascript:void(0);">
+                                        <a class="dropdown-item" href="{% url 'logout' %}">
                                             <i class="bx bx-power-off me-2"></i>
                                             <span class="align-middle">Log Out</span>
                                         </a>

@@ -138,3 +138,6 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 's3c.404@gmail.com'
 EMAIL_HOST_PASSWORD = 'wsaw jdjj yrsw pfqv'
+
+
+LOGOUT_REDIRECT_URL = "acceuil_principale"
