@@ -28,4 +28,8 @@ urlpatterns = [
 
    path('import_etudiantsl/',views.import_etudiantsl,name="import_etudiantsl"),
 
+   #  path('affecter_defis/', views.affecter_defis, name='affecter_defis'),  
+    path('travail/', views.travail, name='travail'),  
+   path('home_admin/',views.home_admin,name='home_admin'),
+
 ]

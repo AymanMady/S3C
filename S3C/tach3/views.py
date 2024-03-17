@@ -9,6 +9,8 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib import messages
 
 
+def home_jery(request):
+    return render(request,"home_jery.html")
 
 
 def create_defi(request):
@@ -36,7 +38,7 @@ def create_defi(request):
             # return HttpResponse("Notification email sent.")
             messages.success(request, 'Défi crée avec succès.')
         messages.success(request, 'Défi crée avec succès.')
-        return redirect("get_all_defis")
+        return redirect("list_defis")
         
     return render(request,'create_defi.html',{'mess':""})
 

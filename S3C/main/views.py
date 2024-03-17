@@ -80,11 +80,11 @@ def acceuil_principale(request):
     return render(request,"acceuil_principale.html") 
 
 def etudient_view(request):
-    return HttpResponse("je suis un etudiant")
+    return redirect("home_etud")
 def admin_view(request):
-    return HttpResponse("je suis un admin")
+    return redirect("home_admin")
 def jery_view(request):
-    return HttpResponse("je suis un jery")
+    return redirect("home_jery")
 
 
 def login(request):

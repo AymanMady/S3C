@@ -2,8 +2,8 @@ from django.shortcuts import render , redirect
 from main.models import *
 # Create your views here.
 
-def home(request):
-    return render(request,"home.html")
+def home_etud(request):
+    return render(request,"home_etud.html")
 
 def cree_groupe(request):
     return render(request,"cree_groupe.html")
