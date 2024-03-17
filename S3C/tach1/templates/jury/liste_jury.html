@@ -1,11 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Liste des Jurys</title>
-</head>
-<body>
+
+{% extends 'navbar.html' %}
+
+{% block content %}
+<div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="py-3 mb-4"><span class="text-muted fw-light">Account Settings /</span> Account</h4>
+
+    <div class="row">
+      <div class="col-md-10">
+        <div class="card mb-4">
+          <h5 class="card-header">Détails du Défi</h5> -->
+
     <h1>Liste des Jurys</h1>
     <ul>
     {% for jury in jurys %}
@@ -18,5 +22,6 @@
     </tr>
     {% endfor %}
     </ul>
-</body>
-</html>
+
+    {% endblock  %}
+
