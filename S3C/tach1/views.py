@@ -11,7 +11,6 @@ from django.core.mail import send_mail
 from random import randint
 
 
-
 def home_admin(request):
     return render(request,"home_admin.html")
 
@@ -174,7 +173,8 @@ def modifier_admin(request, id_admin):
         admin = administrater.objects.get(pk=id_admin)
         if request.method == 'POST':
             admin.nom = request.POST.get('nom')
-            admin.prenom = request.POST.get('prenom')
+            admin.prenom = request.POST.get('prénom')
+            admin.email = request.POST.get('email')
             admin.save()
             return redirect('liste_admin')
         return render(request,"admin/modifier_admin.html",{'admin':admin})
