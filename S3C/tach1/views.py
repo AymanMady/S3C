@@ -178,9 +178,9 @@ def verification_admin(request):
         if entered_code == verification_code:
             nom = request.session.get('nom')
             prenom = request.session.get('prenom')
-            admin = Admin.objects.create(
+            admin = administrater.objects.create(
             nom=nom,
-            prénom=prenom,
+            prenom=prenom,
             email=email
             )
             return redirect('creation_admin')
@@ -196,7 +196,7 @@ def creation_admin(request):
         nom = request.POST.get('nom')
         prenom = request.POST.get('prenom')
         email = request.POST.get('email')
-        compte_existe = Admin.objects.filter(email=email)
+        compte_existe = administrater.objects.filter(email=email)
         if not compte_existe.exists(): 
             code = generate_verification_code()
             send_verification_email(email, code)
@@ -212,16 +212,16 @@ def creation_admin(request):
 
 
 def liste_admin(request):
-    admins = Admin.objects.all()
+    admins = administrater.objects.all()
     return render(request, 'admin/liste_admin.html', {'admins': admins})
 
 
 def supprimer_admin(request, id_admin):
     try:
-        admin = Admin.objects.get(pk=id_admin)
+        admin = administrater.objects.get(pk=id_admin)
         admin.delete()
         return redirect('liste_admin')
-    except Admin.DoesNotExist:
+    except administrater.DoesNotExist:
         return HttpResponseNotFound("L'admin que vous essayez de supprimer n'existe pas.")
     
     
@@ -229,14 +229,14 @@ def supprimer_admin(request, id_admin):
     
 def modifier_admin(request, id_admin):
     try:
-        admin = Admin.objects.get(pk=id_admin)
+        admin = administrater.objects.get(pk=id_admin)
         if request.method == 'POST':
             admin.nom = request.POST.get('nom')
-            admin.prénom = request.POST.get('prenom')
+            admin.prenom = request.POST.get('prenom')
             admin.save()
             return redirect('liste_admin')
         return render(request,"admin/modifier_admin.html",{'admin':admin})
-    except Admin.DoesNotExist:
+    except administrater.DoesNotExist:
         return HttpResponseNotFound("L'admin que vous essayez de modifier n'existe pas.")
     
 # _________________________________END ADMIN______________________________________________________________

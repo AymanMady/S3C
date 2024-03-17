@@ -2,9 +2,8 @@ from django.db import models
 
 class administrater(models.Model):
     nom = models.CharField(max_length=255)
-    prénom = models.CharField(max_length=255)
+    prenom = models.CharField(max_length=255)
     email = models.EmailField(unique=True)
-    
     
 class Jery(models.Model):
     nom = models.CharField(max_length=255)
