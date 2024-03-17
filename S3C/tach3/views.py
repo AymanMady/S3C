@@ -36,7 +36,7 @@ def create_defi(request):
             # return HttpResponse("Notification email sent.")
             messages.success(request, 'Défi crée avec succès.')
         messages.success(request, 'Défi crée avec succès.')
-        return redirect("get_all_defis")
+        return redirect("list_defis")
         
     return render(request,'create_defi.html',{'mess':""})
 
