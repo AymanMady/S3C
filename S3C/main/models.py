@@ -1,10 +1,10 @@
 from django.db import models
 
 class administrater(models.Model):
+    id = models.AutoField(primary_key=True)
     nom = models.CharField(max_length=255)
     prenom = models.CharField(max_length=255)
     email = models.EmailField(unique=True)
-    
     
 class Jery(models.Model):
     nom = models.CharField(max_length=255)
