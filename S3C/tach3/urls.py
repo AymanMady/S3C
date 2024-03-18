@@ -10,4 +10,6 @@ urlpatterns = [
       
     # path('upload/', views.upload_file, name='upload_file'), 
     path('download/<int:file_id>/', views.download_or_view_file, name='download_or_view_file'),
+       path('home_jery/',views.home_jery,name='home_jery'),
+
 ]

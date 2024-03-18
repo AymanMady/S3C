@@ -74,16 +74,17 @@ class Soumission(models.Model):
         ('évalué', 'Évalué'),
     )
     équipe = models.ForeignKey(Équipe, on_delete=models.CASCADE)
-    file = models.FileField(upload_to='uploads/', null=True, blank=True)
     défi = models.ForeignKey(Défi, on_delete=models.CASCADE)
     lienGit = models.CharField(max_length=255)
     dateSoumission = models.DateTimeField()
     status = models.CharField(max_length=7, choices=STATUS_CHOICES)
+    file = models.FileField(upload_to='uploads/', null=True, blank=True)
 
 class Évaluation(models.Model):
     soumission = models.ForeignKey(Soumission, on_delete=models.CASCADE)
     score = models.IntegerField()
     commentaires = models.TextField()
+    jery = models.ForeignKey(Jery, on_delete=models.CASCADE)
 
 class Résultat(models.Model):
     équipe = models.ForeignKey(Équipe, on_delete=models.CASCADE)

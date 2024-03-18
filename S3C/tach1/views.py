@@ -12,6 +12,8 @@ from random import randint
 
 
 
+def home_admin(request):
+    return render(request,"home_admin.html")
 
 
 
@@ -36,7 +38,7 @@ def creation_etudiant(request):
             spécialité=specialite,
             niveau=niveau
             )
-            return redirect('creation_etudiant')
+            return redirect('liste_etudiants')
         messages.error(request, "Le compte déja existe")
         return redirect('creation_etudiant')
     return render(request, "etudiants/creation_etudiant.html")
@@ -91,7 +93,7 @@ def creation_jury(request):
             prénom=prenom,
             email=email
             )
-            return redirect('creation_jury')
+            return redirect('liste_jury')
         messages.error(request, "Le compte déja existe")
         return redirect('creation_jury')
     return render(request, "jury/creation_jury.html")
@@ -144,7 +146,7 @@ def creation_admin(request):
             prenom=prenom,
             email=email
             )
-            return redirect('creation_admin')
+            return redirect('liste_admin')
         messages.error(request, "Le compte déja existe")
         return redirect('creation_admin')
     return render(request, "admin/creation_admin.html")
@@ -196,3 +198,8 @@ def import_etudiantsl(request):
         print('Data imported successfully')
         return render(request, "import_etudiant.html")
     return render(request, "import_etudiant.html")
+
+
+def travail(request):
+    objs=Soumission.objects.all()
+    return render(request,'travails_etudiant.html', {"objs":objs})
