@@ -88,3 +88,47 @@ class Évaluation(models.Model):
 class Résultat(models.Model):
     équipe = models.ForeignKey(Équipe, on_delete=models.CASCADE)
     scoreTotal = models.IntegerField()
+
+
+class Critère(models.Model):
+    id = models.AutoField(primary_key=True)  
+    name = models.CharField(max_length=100)
+    score = models.IntegerField()
+  
+
+    def __str__(self):
+        return self.name
+class notes(models.Model):
+    id = models.AutoField(primary_key=True)
+    credit = models.ForeignKey(Critère, on_delete=models.CASCADE)
+    défi = models.ForeignKey(Défi, on_delete=models.CASCADE)
+    équipe = models.ForeignKey(Équipe, on_delete=models.CASCADE)
+    score = models.IntegerField()
+  
+
+    def __str__(self):
+        return self.name
+    
+
+class AffectationJury(models.Model):
+    membre_jury = models.ForeignKey(Jery, on_delete=models.CASCADE)
+    defi = models.ForeignKey(Défi, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.membre_jury} - {self.defi}"
+
+class GrilleEvaluation(models.Model):
+    defi = models.ForeignKey(Défi, on_delete=models.CASCADE)
+    critere = models.ForeignKey(Critère, on_delete=models.CASCADE)
+    coefficient = models.IntegerField()
+
+    def __str__(self):
+        return f"{self.defi} - {self.critere} (Coefficient: {self.coefficient})"
+    
+class EvaluationJury(models.Model):
+    soumission = models.ForeignKey(Soumission, on_delete=models.CASCADE)
+    membre_jury = models.ForeignKey(Jery, on_delete=models.CASCADE)
+    note = models.IntegerField()
+
+    def __str__(self):
+        return f"{self.membre_jury} - {self.soumission} (Note: {self.note})"
