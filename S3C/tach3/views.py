@@ -6,6 +6,8 @@ from email.mime.multipart import MIMEMultipart
 from django.http import HttpResponse
 from main.models import Défi
 from django.shortcuts import get_object_or_404, render, redirect
+from django.contrib import messages
+
 
 
 
@@ -31,8 +33,11 @@ def create_defi(request):
             # Send the notification email
             verification_Email(defi)
 
-            return HttpResponse("Notification email sent.")
-        return redirect(get_all_defis)
+            # return HttpResponse("Notification email sent.")
+            messages.success(request, 'Défi crée avec succès.')
+        messages.success(request, 'Défi crée avec succès.')
+        return redirect("get_all_defis")
+        
     return render(request,'create_defi.html',{'mess':""})
 
 def get_all_defis(request):

@@ -65,25 +65,31 @@
                     <!-- Dashboards -->
 
                     <li class="menu-item">
-                      <a href="{% url 'home' %}" class="menu-link">
+                      <a href="" class="menu-link">
                         <i class="menu-icon tf-icons bx bx-home-circle"></i>
                         <div data-i18n="Basic">home</div>
                       </a>
                   </li>
                     <!-- Components -->
-                    <li class="menu-header small text-uppercase"><span class="menu-header-text">les operations</span></li>
+                    <li class="menu-header small text-uppercase"><span class="menu-header-text">Gestion</span></li>
                     <!-- Cards -->
                     <li class="menu-item">
-                        <a href="{% url 'cree_groupe' %}" class="menu-link">
+                        <a href="{% url 'liste_etudiants' %}" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-collection"></i>
-                            <div data-i18n="Basic">cree un groupe</div>
+                            <div data-i18n="Basic">Etudiants</div>
                         </a>
                     </li>
                     <!-- User interface -->
                     <li class="menu-item">
-                        <a href="{% url 'render_travail' %}" class="menu-link">
+                        <a href="{% url 'liste_jury' %}" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-collection"></i>
-                            <div data-i18n="Basic">rendre le travail</div>
+                            <div data-i18n="Basic">Jery</div>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="{% url 'liste_jury' %}" class="menu-link">
+                            <i class="menu-icon tf-icons bx bx-collection"></i>
+                            <div data-i18n="Basic">admins</div>
                         </a>
                     </li>
 
@@ -173,7 +179,9 @@
                 <!-- / Navbar -->
 
                 <!-- Content wrapper -->
-                {% block content %}{% endblock %}
+                {% block content %}
+                
+                {% endblock %}
 
 
                 <!-- Content wrapper -->

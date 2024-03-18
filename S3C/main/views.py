@@ -3,8 +3,10 @@ from django.http import HttpResponse
 from .models import Utilisateur, Équipe, Inscription, Etudiant
 from django.db.models import Count
 from django.shortcuts import render
-from .models import Équipe
 from django.db.models import Q
+from django.contrib import messages
+
+
 from django.contrib.auth.hashers import check_password
 from django.core.exceptions import ObjectDoesNotExist
 
@@ -50,23 +52,33 @@ def creer_equipe(request):
             compteur_filieres[etudiant.spécialité] += 1
         
         toutes_les_filieres_presentes = all(compteur_filieres[filiere] > 0 for filiere in filieres_a_verifier)
-
+        utilisateurs = Utilisateur.objects.filter(role='étudiant').annotate(num_inscriptions=Count('inscription')).filter(num_inscriptions=0)
+        
         if not toutes_les_filieres_presentes:
-            return HttpResponse("Il manque au moins un étudiant pour une ou plusieurs filières.")
+            messages.error(request, 'Il manque au moins un étudiant pour une ou plusieurs filières.')
+            return render(request, 'creer_equipe.html', {'utilisateurs': utilisateurs})
       
         if lead_etud.niveau == adjoint_etu.niveau:
-            return HttpResponse("Le lead et l'adjoint doivent avoir des niveaux d'études différents.")
+            messages.error(request, "Le lead et l'adjoint doivent avoir des niveaux d'études différents.")
+            return render(request, 'creer_equipe.html', {'utilisateurs': utilisateurs})
+        
         if count_l2_students < 4:
-            return HttpResponse("Il doit y avoir au moins 4 étudiants de niveau L2 dans l'équipe.")
+            messages.error(request, "Il doit y avoir au moins 4 étudiants de niveau L2 dans l'équipe.")
+            return render(request, 'creer_equipe.html', {'utilisateurs': utilisateurs})
+        
         if len(membres_ids) < 6 or len(membres_ids) > 8:
-            return HttpResponse("Le nombre de membres doit être entre 6 et 8.")
+            messages.error(request, "Le nombre de membres doit être entre 6 et 8.")
+            return render(request, 'creer_equipe.html', {'utilisateurs': utilisateurs})
         
         equipe = Équipe(nomEquipe=nom_equipe, leadID=lead, adjointID=adjoint, nombreMembres=len(membres_ids))
         equipe.save()
+        
         for membre_id in membres_ids:
             Inscription(utilisateur_id=membre_id, équipe=equipe, role='membre').save()
             
-        return redirect('success_url')  
+        messages.success(request, "L'équipe a été créée avec succès.")
+        return redirect('liste_equipes')  
+    
     utilisateurs = Utilisateur.objects.filter(role='étudiant').annotate(num_inscriptions=Count('inscription')).filter(num_inscriptions=0)
     return render(request, 'creer_equipe.html', {'utilisateurs': utilisateurs})
 
@@ -79,6 +91,9 @@ def detail_equipe(request, equipe_id):
     inscriptions = Inscription.objects.filter(équipe=equipe)
     membres = [inscription.utilisateur for inscription in inscriptions]
     return render(request, 'detail_equipe.html', {'equipe': equipe, 'membres': membres})
+
+def acceuil_principale(request):
+    return render(request,"acceuil_principale.html") 
 
 def etudient_view(request):
     return HttpResponse("je suis un etudiant")
