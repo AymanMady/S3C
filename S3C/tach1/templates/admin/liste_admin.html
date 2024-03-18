@@ -10,8 +10,9 @@
     <ul>
     {% for admin in admins %}
     <tr>
+        <td>{{ admin.id }}</td>
         <td>{{ admin.nom }}</td>
-        <td> {{ admin.prénom }}</td>
+        <td> {{ admin.prenom }}</td>
         <td>{{ admin.email }}</td>
         <a href="{% url 'supprimer_admin' admin.id %}">Supprimer</a> 
         <a href="{% url 'modifier_admin' admin.id %}">Modifier</a>

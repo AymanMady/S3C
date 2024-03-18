@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.conf import settings
 from django.core.mail import send_mail
 from main.models import *
+from main.models import administrater as Admin
 # Create your views here.
 import openpyxl
 
@@ -232,7 +233,7 @@ def modifier_admin(request, id_admin):
         admin = Admin.objects.get(pk=id_admin)
         if request.method == 'POST':
             admin.nom = request.POST.get('nom')
-            admin.prénom = request.POST.get('prenom')
+            admin.prenom = request.POST.get('prenom')
             admin.save()
             return redirect('liste_admin')
         return render(request,"admin/modifier_admin.html",{'admin':admin})

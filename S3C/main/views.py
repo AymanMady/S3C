@@ -5,6 +5,9 @@ from django.db.models import Count
 from django.shortcuts import render
 from .models import Équipe
 from django.db.models import Q
+from django.contrib.auth.hashers import check_password
+from django.core.exceptions import ObjectDoesNotExist
+
 
 def creer_equipe(request):
     if request.method == 'POST':
@@ -60,3 +63,35 @@ def detail_equipe(request, equipe_id):
     inscriptions = Inscription.objects.filter(équipe=equipe)
     membres = [inscription.utilisateur for inscription in inscriptions]
     return render(request, 'detail_equipe.html', {'equipe': equipe, 'membres': membres})
+
+def etudient_view(request):
+    return HttpResponse("je suis un etudiant")
+def admin_view(request):
+    return HttpResponse("je suis un admin")
+def jery_view(request):
+    return HttpResponse("je suis un jery")
+
+
+def login(request):
+    if request.method == "POST":
+        email = request.POST.get('email')
+        pwd = request.POST.get('password')
+        try:
+            user = Utilisateur.objects.filter(email=email).first()
+        except ObjectDoesNotExist:
+            return render(request, 'login.html', {"mess": "Utilisateur n'existe pas !"})
+        if user:
+            if  user.motDePasse ==pwd :
+                if user.role.lower() == "étudiant":
+                    return redirect('etudient_view')  # Assuming 'etudient_view' is a URL name
+                elif user.role.lower() == "organisateur":
+                    return redirect('admin_view')  # Assuming 'admin_view' is a URL name
+                else:
+                    return redirect('jery_view')  # Assuming 'jery_view' is a URL name
+            else:
+                return render(request, 'login.html', {"mess": "Mot de passe incorrect !"})
+        else:
+            return render(request, 'login.html', {"mess": "Utilisateur n'existe pas !"})
+
+    return render(request, 'login.html', {"mess": ""})
+
